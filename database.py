@@ -3,6 +3,7 @@ import sqlite3
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
 
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,7 +55,7 @@ async def insert_user(fullname, group, phone, ariza_text):
 
     conn.commit()
     conn.close()
-    print("TRUEEE")
+
 
 
 async def get_user_by_phone(phone):
