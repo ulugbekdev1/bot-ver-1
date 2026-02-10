@@ -1,13 +1,16 @@
 from aiogram import executor
 
 from loader import dp
+from database import init_db   # 👈 QO‘SHILDI
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
 
 
 async def on_startup(dispatcher):
-    # Birlamchi komandalar (/star va /help)
+    init_db()   # 👈 ENG MUHIM QATOR
+
+    # Birlamchi komandalar (/start va /help)
     await set_default_commands(dispatcher)
 
     # Bot ishga tushgani haqida adminga xabar berish

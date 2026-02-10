@@ -205,7 +205,8 @@ async def confirm_ariza(message: types.Message, state: FSMContext):
     group = data.get("group")
     phone = data.get("phone")
     ariza_text = data.get("ariza_text", "Matn mavjud emas")
-    id = await get_user_by_phone(phone)
+    id = get_user_by_phone(phone)
+
 
 
     # Guruhga xabar yuborish
@@ -219,7 +220,8 @@ async def confirm_ariza(message: types.Message, state: FSMContext):
     )
 
     # Foydalanuvchi ID va guruhdagi xabar ID sini bog‘lab saqlaymiz
-    await save_message_link(message.from_user.id, sent_message.message_id)
+    save_message_link(message.from_user.id, sent_message.message_id)
+
 
     await message.answer(
         "<b>✅ Arizangiz yuborildi!</b>\nTez orada javob olasiz.",
@@ -248,7 +250,8 @@ dp.filters_factory.bind(IsGroupReply)
 @dp.message_handler(is_group_reply=True, content_types=types.ContentTypes.ANY)
 async def handle_group_reply(message: types.Message):
     reply_to = message.reply_to_message
-    user_id = await get_user_by_group_message(reply_to.message_id)
+    user_id = get_user_by_group_message(reply_to.message_id)
+
 
     if not user_id:
         return await message.reply("⚠️ Bu xabar foydalanuvchiga bog‘lanmagan.")
