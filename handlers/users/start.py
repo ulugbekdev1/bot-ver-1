@@ -9,7 +9,7 @@ from app import dp
 from loader import bot
 from database import insert_user, get_all_users, get_user_by_group_message, save_message_link, get_user_by_phone
 
-
+from data.config import GROUP_ID
 # --- STATE-LAR ---
 class RegisterState(StatesGroup):
     fullname = State()
@@ -194,11 +194,13 @@ async def receive_ariza_text(message: types.Message, state: FSMContext):
     phone = data.get("phone")
     ariza_text = data.get("ariza_text", "Matn mavjud emas")
     await insert_user(fullname, group, phone, ariza_text)
-GROUP_ID = -1002976709404
+
+
 
 
 @dp.message_handler(lambda message: message.text == "✅ Tasdiqlash", state=RegisterState.confirm)
 async def confirm_ariza(message: types.Message, state: FSMContext):
+    group_idd = int(GROUP_ID)
     print("uuy")
     data = await state.get_data()
     fullname = data.get("fullname")
@@ -211,7 +213,7 @@ async def confirm_ariza(message: types.Message, state: FSMContext):
 
     # Guruhga xabar yuborish
     sent_message = await bot.send_message(
-        GROUP_ID,
+        group_idd,
         f"📥 <b>Yangi ariza!</b>  #{id}\n\n"
         f"👤 <b>Ism:</b> {fullname}\n"
         f"🏫 <b>Guruh:</b> {group}\n"
